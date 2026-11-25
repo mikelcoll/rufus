@@ -972,6 +972,7 @@ static INT_PTR CALLBACK SelectionCallback(HWND hDlg, UINT message, WPARAM wParam
 			GetWindowRect(hCtrl, &rc);
 			SetWindowPos(GetDlgItem(hDlg, IDC_SELECTION_USERNAME), hCtrl, rc.left, rc.top, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
 			hCtrl = GetDlgItem(hDlg, IDC_SELECTION_USERNAME);
+			SendMessage(hCtrl, EM_LIMITTEXT, USERNAME_MAX_CHARS, 0);
 			GetWindowRect(hCtrl, &rc2);
 			ResizeMoveCtrl(hDlg, hCtrl, right_to_left_mode ? rc2.right - rc.left : rc.right - rc2.left, rc.top - rc2.top,
 				GetTextSize(hCtrl, (char*)base_username).cx, 0, 1.0f);

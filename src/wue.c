@@ -345,6 +345,15 @@ char* CreateUnattendXml(int arch, int flags)
 			if (flags & UNATTEND_SET_USER) {
 				// Remove leading and trailing whitespaces (https://github.com/pbatard/rufus/issues/2950)
 				trim(unattend_username);
+				wchar_t* wusername = utf8_to_wchar(unattend_username);
+				if (wusername != NULL && wcslen(wusername) > USERNAME_MAX_CHARS) {
+					uprintf("WARNING: Local account name '%s' is too long and has been truncated to %d characters",
+						unattend_username, USERNAME_MAX_CHARS);
+					wusername[USERNAME_MAX_CHARS] = 0;
+					wchar_to_utf8_no_alloc(wusername, unattend_username, sizeof(unattend_username));
+					trim(unattend_username);
+				}
+				free(wusername);
 				for (i = 0; (i < ARRAYSIZE(unallowed_account_names)) && (stricmp(unattend_username, unallowed_account_names[i]) != 0); i++);
 				if (i < ARRAYSIZE(unallowed_account_names)) {
 					uprintf("WARNING: '%s' is not allowed as local account name - Option ignored", unattend_username);

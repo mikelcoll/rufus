@@ -155,6 +155,9 @@
 // and https://learn.microsoft.com/en-us/previous-versions/cc722458(v=technet.10)#user-name-policies
 // Also add '&', even as it could be escaped, as it's just not worth the trouble...
 #define USERNAME_INVALID_CHARS      "/\\[]:;|=,+*?<>%@&\""
+// Per https://learn.microsoft.com/en-us/windows/win32/api/lmaccess/nf-lmaccess-netuseradd#remarks
+// Windows Setup fails on longer names, even as the unattend documentation above says 256.
+#define USERNAME_MAX_CHARS          20
 #define IS_POWER_OF_2(x)            ((x != 0) && (((x) & ((x) - 1)) == 0))
 #define IGNORE_RETVAL(expr)         do { (void)(expr); } while(0)
 #ifndef ARRAYSIZE
